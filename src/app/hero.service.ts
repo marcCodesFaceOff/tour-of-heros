@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Hero } from './hero/hero';
-import { HEROES } from './hero/mock-heroes';
 import { MessageService } from './message.service';
 
 @Injectable({ providedIn: 'root' })
@@ -50,7 +49,6 @@ private handleError<T>(operation = 'operation', result?: T) {
       tap(_ => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes', []))
     );
-
   }
 
   /** GET hero by id. Will 404 if id not found 
