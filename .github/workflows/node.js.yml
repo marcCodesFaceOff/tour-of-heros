@@ -28,25 +28,6 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: npm test -- --watch=false --browsers=ChromeHeadless
     
-  test:
-    needs: [build]
-    strategy:
-      matrix:
-        os: [ubuntu, macos, windows]
-    runs-on: ${{ matrix.os }}-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          name: dist
-
-      - name: Install with no params
-        uses: ./
-      - if: runner.os == 'Linux'
-        run: chrome --version
-      - if: runner.os == 'macOS'
-        run: chromium --version
-      - if: runner.os == 'Windows'
-        run: (Get-Item (Get-Command chrome).Source).VersionInfo.ProductVersion
-        # Unable to run with command-line option on windows
+  
